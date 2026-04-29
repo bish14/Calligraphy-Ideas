@@ -1,78 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calligraphy Prompts</title>
-    <!-- Fonts: Great Vibes for handwritten, Outfit for UI -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calligraphy Ideas — by Bhishma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="background-effects">
-        <div class="glow-orb orb-1"></div>
-        <div class="glow-orb orb-2"></div>
-    </div>
 
-    <main class="app-container">
-        <header>
-            <h1 class="handwritten-title">What would you like to write today?</h1>
-        </header>
+  <header>
+    <p class="site-label">Calligraphy Ideas</p>
+    <h1>What would you<br /><em>like to write</em> today?</h1>
+    <p class="site-sub">AI-powered quote inspiration for copperplate, brush &amp; modern lettering</p>
+  </header>
 
-        <section class="controls glass-panel">
-            <div class="control-group">
-                <label for="mood-select">Mood & Theme</label>
-                <div class="select-wrapper">
-                    <select id="mood-select">
-                        <option value="Any">Surprise Me</option>
-                        <option value="Happy">Happy & Joyful</option>
-                        <option value="Spiritual">Spiritual & Divine</option>
-                        <option value="Motivational">Motivational</option>
-                        <option value="Provoking">Thought Provoking</option>
-                        <option value="Poetry">Poetry</option>
-                    </select>
-                </div>
-            </div>
+  <main>
 
-            <div class="control-group">
-                <label for="word-count">Length: <span id="word-count-display">5</span> words</label>
-                <div class="slider-wrapper">
-                    <input type="range" id="word-count" min="1" max="10" value="5">
-                    <small class="slider-hint">Select exactly 1-10 words</small>
-                </div>
-            </div>
+    <!-- CONTROLS -->
+    <section class="controls-card">
 
-            <button id="generate-btn" class="primary-btn">
-                <span>Inspire Me</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </button>
-        </section>
+      <div class="control-group">
+        <label class="control-label">Mood &amp; Theme</label>
+        <div class="chip-row" id="mood-chips">
+          <button class="chip" data-value="surprise">✦ Surprise Me</button>
+          <button class="chip active" data-value="happy">Happy &amp; Joyful</button>
+          <button class="chip" data-value="spiritual">Spiritual &amp; Divine</button>
+          <button class="chip" data-value="motivational">Motivational</button>
+          <button class="chip" data-value="philosophical">Thought Provoking</button>
+          <button class="chip" data-value="poetry">Poetry</button>
+        </div>
+      </div>
 
-        <section class="result-area">
-            <div id="quote-card" class="quote-card glass-panel hidden">
-                <div class="quote-content">
-                    <p id="quote-text" class="quote-text"></p>
-                    <div class="quote-meta">
-                        <span id="quote-author" class="quote-author"></span>
-                        <span id="quote-mood" class="quote-badge"></span>
-                    </div>
-                </div>
-                <div class="actions">
-                    <button id="copy-btn" class="icon-btn" aria-label="Copy to clipboard" title="Copy to clipboard">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    </button>
-                </div>
-            </div>
-            
-            <div id="empty-state" class="empty-state">
-                <p>Select your preferences and tap "Inspire Me" to reveal your next masterpiece.</p>
-            </div>
-        </section>
-    </main>
+      <div class="control-group">
+        <label class="control-label">Lettering Style</label>
+        <div class="chip-row" id="style-chips">
+          <button class="chip active" data-value="copperplate">Copperplate</button>
+          <button class="chip" data-value="modern">Modern</button>
+          <button class="chip" data-value="brush">Brush Lettering</button>
+        </div>
+      </div>
 
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+      <div class="control-group">
+        <label class="control-label">
+          Quote Length: <span id="length-display">5</span> words
+        </label>
+        <input type="range" id="length-slider" min="1" max="10" value="5" />
+        <div class="slider-labels"><span>Short</span><span>Long</span></div>
+      </div>
+
+      <button id="inspire-btn" onclick="generate()">
+        <span id="btn-text">Inspire Me</span>
+        <span id="btn-spinner" class="spinner hidden"></span>
+      </button>
+
+    </section>
+
+    <!-- RESULT -->
+    <section id="result-card" class="result-card hidden">
+
+      <div class="result-quote-wrap">
+        <p class="result-quote" id="result-quote"></p>
+        <p class="result-attribution" id="result-attribution"></p>
+      </div>
+
+      <div class="result-tags" id="result-tags"></div>
+
+      <div class="result-note" id="result-style-note"></div>
+
+      <!-- Devanagari -->
+      <div id="devanagari-block" class="devanagari-block hidden">
+        <p class="block-label">✦ Sanskrit / Hindi version</p>
+        <p class="devanagari-text" id="devanagari-text"></p>
+        <p class="devanagari-roman" id="devanagari-roman"></p>
+      </div>
+
+      <!-- Practice words -->
+      <div class="practice-block">
+        <p class="block-label">Practice words from this quote</p>
+        <div class="word-row" id="practice-words"></div>
+      </div>
+
+      <!-- Instagram caption -->
+      <div class="caption-block">
+        <div class="caption-header">
+          <p class="block-label">Instagram caption</p>
+          <button class="copy-btn" onclick="copyCaption()">Copy</button>
+        </div>
+        <p class="caption-text" id="caption-text"></p>
+      </div>
+
+      <button class="refresh-btn" onclick="generate()">Generate another →</button>
+
+    </section>
+
+    <!-- EMPTY STATE -->
+    <section id="empty-state" class="empty-state">
+      <div class="empty-icon">✦</div>
+      <p>Select your preferences and tap <strong>Inspire Me</strong><br />to reveal your next masterpiece.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Built by Bhishma · Puttaparthi, India · Copperplate, Modern &amp; Brush Lettering</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
